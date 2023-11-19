@@ -1,0 +1,77 @@
+---
+// Access the dynamic route parameters `exam_name` and `student_email`
+const { exam_name, student_email } = Astro.params;
+
+// Define an async function to fetch the out of frame data for the given exam and student
+async function fetchOutOfFrameData(exam, student) {
+  try {
+    const response = await fetch(`http://localhost:8000/reports/${exam}/${student}/out_of_frame`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const outOfFrameData = await response.json();
+    return outOfFrameData;
+  } catch (error) {
+    console.error('Failed to fetch out of frame data:', error);
+    return []; // Return an empty array as a fallback
+  }
+}
+
+// Fetch the out of frame data using the exam name and student email
+const outOfFrameData = await fetchOutOfFrameData(exam_name, student_email);
+---
+
+<html>
+<head>
+    <title>Out of Frame for {student_email}</title>
+    <style>
+      .out-of-frame-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+      .out-of-frame-table th,
+      .out-of-frame-table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+      }
+      .out-of-frame-table th {
+        background-color: #f2f2f2;
+      }
+      .out-of-frame-image {
+        max-width: 50px; // Set a max-width for images to fit multiple images in one cell
+        height: auto; // Maintain aspect ratio
+        margin-right: 5px; // Add some space between images
+      }
+    </style>
+</head>
+<body>
+    <h1>Out of Frame for {student_email}</h1>
+    <table class="out-of-frame-table">
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>Duration (seconds)</th>
+          <th>Images</th>
+        </tr>
+      </thead>
+      <tbody>
+        {outOfFrameData.map((event, index) => (
+          <tr key={index}>
+            <td>{event.time}</td>
+            <td>{event.duration}</td>
+            <td>
+              {event.images.map((image, imgIndex) => (
+                <img key={imgIndex}
+                     class="out-of-frame-image"
+                     src={image}
+                     alt={`Out of frame ${imgIndex + 1}`} />
+              ))}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+</body>
+</html>

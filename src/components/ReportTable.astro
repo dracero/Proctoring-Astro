@@ -1,0 +1,69 @@
+---
+// Props: reports (the list of report objects)
+const { reports } = Astro.props;
+const { exam_name } = Astro.props;
+import Cell from './Cell.astro';
+
+// Assuming 'student' is the key for the student's email in the report objects
+// and it should not be treated as a test result.
+const testKeys = reports.length > 0 ? Object.keys(reports[0]).filter(key => key !== 'student') : [];
+---
+
+<div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>student</th> <!-- Always include the student email column -->
+          {testKeys.map((testName) => (
+            <th key={testName}>{testName}</th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {reports.map((report, index) => (
+          <tr key={index}>
+            <td>{report.student}</td> <!-- Directly render the student email -->
+            {testKeys.map((testName) => (
+                <Cell key={testName}
+                    value={report[testName]}
+                    test={testName}
+                    studentEmail={report.student}
+                    examName={exam_name} />
+                ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+</div>
+
+<style>
+  .table-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  table {
+    border-collapse: collapse;
+    text-align: center;
+  }
+  
+  th, td {
+    border: 1px solid #dee2e6;
+    padding: 5px 10px; /* Adjust the padding to change the cell dimensions */
+    width: 100px; /* Set a fixed width */
+    height: 10px; /* Set a fixed height */
+  }
+  
+  th {
+    background-color: #f8f9fa;
+  }
+  
+  /* Ensure that the student email column is not constrained to the same width */
+  th:first-child, td:first-child {
+    width: auto;
+  }
+  
+  /* Add any other table styles you need here */
+</style>

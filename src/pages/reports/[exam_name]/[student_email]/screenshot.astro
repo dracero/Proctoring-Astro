@@ -1,0 +1,45 @@
+---
+// Access the dynamic route parameters `exam_name` and `student_email`
+const { exam_name, student_email } = Astro.params;
+
+// Define an async function to fetch the screenshot data for the given exam and student
+async function fetchScreenshotData(exam, student) {
+  try {
+    const response = await fetch(`http://localhost:8000/reports/${exam}/${student}/screenshot`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const imageData = await response.json(); // Fetch the image data as text
+    return imageData;
+  } catch (error) {
+    console.error('Failed to fetch screenshot data:', error);
+    return ''; // Return an empty string as a fallback
+  }
+}
+
+// Fetch the screenshot data using the exam name and student email
+const screenshotData = await fetchScreenshotData(exam_name, student_email);
+
+---
+
+<html>
+<head>
+    <title>Screenshot: {student_email}</title>
+    <style>
+      .screenshot-container {
+        text-align: center; // Center the image in the container
+      }
+      .screenshot-image {
+        max-width: 100%; // Make sure the image is not larger than its container
+        height: auto; // Keep the image's aspect ratio
+      }
+    </style>
+</head>
+<body>
+    <h1>Screenshot for {student_email}</h1>
+    <br>
+    <div class="screenshot-container">
+        <img class="screenshot-image" src={screenshotData} alt="Student Screenshot" />
+    </div>
+</body>
+</html>

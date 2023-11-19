@@ -1,0 +1,32 @@
+---
+// Props: value (expecting "SUCCESS" or "FAIL")
+const { value, test, studentEmail, examName } = Astro.props;
+const isSuccess = value.includes('SUCCESS');
+const isFail = value.includes('FAIL');
+// Define the URL to redirect to when the cell is clicked
+const redirectUrl = `${examName}/${studentEmail}/${test}/`;
+---
+
+<td class={isSuccess ? 'success' : isFail ? 'fail' : ''}
+    onclick=`window.location.href='${redirectUrl}'`
+    role="button"
+    tabindex="0">
+  <!-- Cell content (empty for SUCCESS/FAIL, student email otherwise) -->
+  {isSuccess || isFail ? '' : value}
+</td>
+
+<style>
+  td {
+    padding: 8px;
+    text-align: center;
+  }
+  .success {
+    background-color: #28a745; /* Green for success */
+  }
+  .fail {
+    background-color: #dc3545; /* Red for fail */
+  }
+  td {
+    cursor: pointer; /* Change cursor to indicate the cell is clickable */
+  }
+</style>

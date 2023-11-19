@@ -1,0 +1,59 @@
+---
+// Define an async function to get exams
+import DropDownMenu from '../components/DropDownMenu.astro';
+import GoButton from '../components/GoButton.astro';
+
+async function getExams() {
+    try {
+        const response = await fetch('http://localhost:8000/exams');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const exams = await response.json();
+        return exams;
+    } catch (error) {
+        console.error('Failed to fetch exams:', error);
+        return []; // Return an empty array as a fallback
+    }
+}
+// Call the function and store the exams
+// This is run on the server whenever the component is rendered
+const examList = await getExams();
+---
+
+<div class="centered-form-wrapper">
+  <form action="/reports/" method="get" class="exam-form">
+    <DropDownMenu exams={examList} />
+    <GoButton />
+  </form>
+</div> 
+
+<script>
+  const form = document.querySelector('form');
+  const select = document.querySelector('select');
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const examName = select.value;
+    window.location.href = `/reports/${encodeURIComponent(examName)}`;
+  });
+</script>
+
+<style>
+  /* Styles for centering the form */
+  .centered-form-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Use the full height of the viewport */
+    margin: 0;
+    padding: 0;
+  }
+
+  .exam-form {
+    /* Change to row layout and adjust styles accordingly */
+    display: flex;
+    flex-direction: row; /* Align children in a row */
+    gap: 10px; /* Space between dropdown and button */
+  }
+</style>

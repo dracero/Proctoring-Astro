@@ -1,0 +1,32 @@
+---
+// Access the dynamic route parameter `exam_name`
+const { exam_name } = Astro.params;
+import ReportTable from '../../components/ReportTable.astro';
+// Define an async function to fetch the report data for the given exam
+async function fetchReportData(exam) {
+  try {
+    const response = await fetch(`http://localhost:8000/reports/${exam}`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const reportData = await response.json();
+    return reportData;
+  } catch (error) {
+    console.error('Failed to fetch report data:', error);
+    return []; // Return an empty array as a fallback
+  }
+}
+
+// Fetch the report data using the exam name
+const reportData = await fetchReportData(exam_name);
+---
+
+<html>
+<head>
+    <title>{exam_name}</title>
+</head>
+<body>
+    <h1>{exam_name}</h1>
+    <ReportTable reports={reportData} exam_name={exam_name} />
+</body>
+</html>

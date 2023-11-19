@@ -1,0 +1,63 @@
+---
+// Access the dynamic route parameters `exam_name` and `student_email`
+const { exam_name, student_email } = Astro.params;
+
+// Define an async function to fetch the blur data for the given exam and student
+async function fetchBlurData(exam, student) {
+  try {
+    const response = await fetch(`http://localhost:8000/reports/${exam}/${student}/blur`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const blurData = await response.json();
+    return blurData;
+  } catch (error) {
+    console.error('Failed to fetch blur data:', error);
+    return []; // Return an empty array as a fallback
+  }
+}
+
+// Fetch the blur data using the exam name and student email
+const blurData = await fetchBlurData(exam_name, student_email);
+---
+
+<html>
+<head>
+    <title>Blur Events for {student_email}</title>
+    <style>
+      .blur-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+      .blur-table th,
+      .blur-table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+      }
+      .blur-table th {
+        background-color: #f2f2f2;
+      }
+    </style>
+</head>
+<body>
+    <h1>Blur Events for {student_email}</h1>
+    <table class="blur-table">
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>Message</th>
+        </tr>
+      </thead>
+      <tbody>
+        {blurData.map((blurEvent, index) => (
+          <tr key={index}>
+            <td>{blurEvent.time}</td>
+            <td>{blurEvent.msg}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+</body>
+</html>

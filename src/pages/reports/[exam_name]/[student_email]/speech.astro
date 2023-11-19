@@ -1,0 +1,63 @@
+---
+// Access the dynamic route parameters `exam_name` and `student_email`
+const { exam_name, student_email } = Astro.params;
+
+// Define an async function to fetch the speech detection data for the given exam and student
+async function fetchSpeechData(exam, student) {
+  try {
+    const response = await fetch(`http://localhost:8000/reports/${exam}/${student}/speech_detection`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const speechData = await response.json();
+    return speechData;
+  } catch (error) {
+    console.error('Failed to fetch speech detection data:', error);
+    return []; // Return an empty array as a fallback
+  }
+}
+
+// Fetch the speech detection data using the exam name and student email
+const speechData = await fetchSpeechData(exam_name, student_email);
+---
+
+<html>
+<head>
+    <title>Speech Detection for {student_email}</title>
+    <style>
+      .speech-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+      .speech-table th,
+      .speech-table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+      }
+      .speech-table th {
+        background-color: #f2f2f2;
+      }
+    </style>
+</head>
+<body>
+    <h1>Speech Detection for {student_email}</h1>
+    <table class="speech-table">
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>Conversation</th>
+        </tr>
+      </thead>
+      <tbody>
+        {speechData.map((speechEvent, index) => (
+          <tr key={index}>
+            <td>{speechEvent.time}</td>
+            <td>{speechEvent.conversation}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+</body>
+</html>
