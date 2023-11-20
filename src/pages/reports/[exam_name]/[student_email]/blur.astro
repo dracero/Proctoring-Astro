@@ -25,39 +25,94 @@ const blurData = await fetchBlurData(exam_name, student_email);
 <head>
     <title>Blur Events for {student_email}</title>
     <style>
-      .blur-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-      }
-      .blur-table th,
-      .blur-table td {
-        border: 1px solid #ddd;
-        padding: 8px;
-        text-align: left;
-      }
-      .blur-table th {
-        background-color: #f2f2f2;
-      }
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        h2 {
+            color: #007BFF;
+            font-size: 2.5rem;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            width: max-content;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .blur-table {
+            border-collapse: separate;
+            border-spacing: 0;
+            width: 80%;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            animation: slideIn 0.5s ease-out, fadeIn 0.5s ease-out;
+        }
+
+        .blur-table th, .blur-table td {
+            border: 1px solid #dee2e6;
+            padding: 10px 15px;
+            width: 120px; /* Fixed width for all cells */
+            min-width: 120px; /* Minimum width for all cells */
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .blur-table th {
+            background-color: #ADD8E6; /* Light blue background for table headers */
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .blur-table td {
+            background-color: white;
+            color: #333;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(50px);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
     </style>
 </head>
 <body>
-    <h1>Blur Events for {student_email}</h1>
+    <h2>Blur Events - {student_email}</h2>
     <table class="blur-table">
-      <thead>
-        <tr>
-          <th>Time</th>
-          <th>Message</th>
-        </tr>
-      </thead>
-      <tbody>
-        {blurData.map((blurEvent, index) => (
-          <tr key={index}>
-            <td>{blurEvent.time}</td>
-            <td>{blurEvent.msg}</td>
-          </tr>
-        ))}
-      </tbody>
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Message</th>
+            </tr>
+        </thead>
+        <tbody>
+            {blurData.map((blurEvent, index) => (
+                <tr key={index}>
+                    <td>{blurEvent.time}</td>
+                    <td>{blurEvent.msg}</td>
+                </tr>
+            ))}
+        </tbody>
     </table>
 </body>
 </html>

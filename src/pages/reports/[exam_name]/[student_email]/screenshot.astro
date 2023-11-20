@@ -19,25 +19,59 @@ async function fetchScreenshotData(exam, student) {
 
 // Fetch the screenshot data using the exam name and student email
 const screenshotData = await fetchScreenshotData(exam_name, student_email);
-
 ---
 
 <html>
 <head>
     <title>Screenshot: {student_email}</title>
     <style>
-      .screenshot-container {
-        text-align: center; // Center the image in the container
-      }
-      .screenshot-image {
-        max-width: 100%; // Make sure the image is not larger than its container
-        height: auto; // Keep the image's aspect ratio
-      }
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        h2 {
+          color: #007BFF;
+          font-size: 2.5rem;
+          letter-spacing: 0.1em;
+          margin-bottom: 1rem;
+          padding-bottom: 0.5rem;
+          width: max-content;
+          animation: fadeIn 1s ease-out;
+        }
+
+        .screenshot-container {
+            text-align: center; // Center the image in the container
+            animation: fadeIn 1s ease-out;
+        }
+        .screenshot-image {
+            max-width: 100vw; // Adjust to the desired max width
+            max-height: 100vh; // Adjust to the desired max width
+            height: auto; // Keep the image's aspect ratio
+            margin-top: 20px; // Add some space above the image
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); // Consistent shadow with tables
+            border-radius: 8px; // Optional: if you want rounded corners
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
     </style>
 </head>
 <body>
-    <h1>Screenshot for {student_email}</h1>
-    <br>
+    <h2>Screenshot - {student_email}</h2>
     <div class="screenshot-container">
         <img class="screenshot-image" src={screenshotData} alt="Student Screenshot" />
     </div>

@@ -25,53 +25,110 @@ const outOfFrameData = await fetchOutOfFrameData(exam_name, student_email);
 <head>
     <title>Out of Frame for {student_email}</title>
     <style>
-      .out-of-frame-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
+      body {
+          font-family: 'Arial', sans-serif;
+          margin: 0;
+          padding: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+          height: 100vh;
+          background-color: #f4f4f4;
       }
+
+      h2 {
+          color: #007BFF;
+          font-size: 2.5rem;
+          letter-spacing: 0.1em;
+          margin-bottom: 1rem;
+          padding-bottom: 0.5rem;
+          width: max-content;
+          animation: fadeIn 1s ease-out;
+      }
+
+      .out-of-frame-table {
+          border-collapse: separate;
+          border-spacing: 0;
+          width: 80%;
+          margin-top: 20px;
+          box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+          animation: slideIn 0.5s ease-out, fadeIn 0.5s ease-out;
+      }
+
       .out-of-frame-table th,
       .out-of-frame-table td {
-        border: 1px solid #ddd;
-        padding: 8px;
-        text-align: left;
+          border: 1px solid #dee2e6;
+          padding: 10px 15px;
+          width: 120px; /* Fixed width for all cells */
+          min-width: 120px; /* Minimum width for all cells */
+          font-weight: bold;
+          text-align: center;
       }
+
       .out-of-frame-table th {
-        background-color: #f2f2f2;
+          background-color: #ADD8E6; /* Light blue background for table headers */
+          color: white;
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
       }
+
+      .out-of-frame-table td {
+          background-color: white;
+          color: #333;
+      }
+
       .out-of-frame-image {
-        max-width: 50px; // Set a max-width for images to fit multiple images in one cell
-        height: auto; // Maintain aspect ratio
-        margin-right: 5px; // Add some space between images
+          max-width: 50px; /* Set a max-width for images */
+          height: auto; /* Maintain aspect ratio */
+          margin-right: 5px; /* Add some space between images */
+      }
+
+      @keyframes slideIn {
+          from {
+              transform: translateY(50px);
+          }
+          to {
+              transform: translateY(0);
+          }
+      }
+
+      @keyframes fadeIn {
+          from {
+              opacity: 0;
+          }
+          to {
+              opacity: 1;
+          }
       }
     </style>
 </head>
 <body>
-    <h1>Out of Frame events for {student_email}</h1>
+    <h2>Out of Frame Events - {student_email}</h2>
     <table class="out-of-frame-table">
-      <thead>
-        <tr>
-          <th>Time</th>
-          <th>Duration (seconds)</th>
-          <th>Images</th>
-        </tr>
-      </thead>
-      <tbody>
-        {outOfFrameData.map((event, index) => (
-          <tr key={index}>
-            <td>{event.time}</td>
-            <td>{event.duration}</td>
-            <td>
-              {event.images.map((image, imgIndex) => (
-                <img key={imgIndex}
-                     class="out-of-frame-image"
-                     src={image}
-                     alt={`Out of frame ${imgIndex + 1}`} />
-              ))}
-            </td>
-          </tr>
-        ))}
-      </tbody>
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Duration (seconds)</th>
+                <th>Images</th>
+            </tr>
+        </thead>
+        <tbody>
+            {outOfFrameData.map((event, index) => (
+                <tr key={index}>
+                    <td>{event.time}</td>
+                    <td>{event.duration}</td>
+                    <td>
+                        {event.images.map((image, imgIndex) => (
+                            <img key={imgIndex}
+                                 class="out-of-frame-image"
+                                 src={image}
+                                 alt={`Out of frame ${imgIndex + 1}`} />
+                        ))}
+                    </td>
+                </tr>
+            ))}
+        </tbody>
     </table>
 </body>
 </html>

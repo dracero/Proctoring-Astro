@@ -25,47 +25,106 @@ const objectDetectionData = await fetchObjectDetectionData(exam_name, student_em
 <head>
     <title>Object Detection for {student_email}</title>
     <style>
-      .object-detection-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
+      body {
+          font-family: 'Arial', sans-serif;
+          margin: 0;
+          padding: 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          background-color: #f4f4f4;
       }
+
+      h2 {
+          color: #007BFF;
+          font-size: 2.5rem;
+          letter-spacing: 0.1em;
+          margin-top: 20px; /* Adjust the margin-top to ensure visibility */
+          margin-bottom: 20px;
+          padding-bottom: 0.5rem;
+          width: max-content;
+          animation: fadeIn 1s ease-out;
+      }
+
+      .object-detection-table {
+          border-collapse: separate;
+          border-spacing: 0;
+          width: 80%; /* Adjust the width as needed */
+          max-width: 800px; /* Set a max-width to control table size */
+          box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+          animation: slideIn 0.5s ease-out, fadeIn 0.5s ease-out;
+          margin-bottom: 20px; /* Ensure there's space below the table */
+      }
+
       .object-detection-table th,
       .object-detection-table td {
-        border: 1px solid #ddd;
-        padding: 8px;
-        text-align: left;
+          border: 1px solid #dee2e6;
+          padding: 10px 15px;
+          width: 120px; /* Fixed width for all cells */
+          min-width: 120px; /* Minimum width for all cells */
+          font-weight: bold;
+          text-align: center;
       }
+
       .object-detection-table th {
-        background-color: #f2f2f2;
+          background-color: #ADD8E6; /* Light blue background for table headers */
+          color: white;
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
       }
+
+      .object-detection-table td {
+          background-color: white;
+          color: #333;
+      }
+
       .object-detection-image {
-        max-width: 100px; // Set a max-width for images to avoid large images breaking the layout
-        height: auto; // Maintain aspect ratio
+          max-width: 100px;
+          height: auto;
+          margin-right: 5px;
+          transition: transform 0.2s ease;
+      }
+
+      @keyframes slideIn {
+          from {
+              transform: translateY(50px);
+          }
+          to {
+              transform: translateY(0);
+          }
+      }
+
+      @keyframes fadeIn {
+          from {
+              opacity: 0;
+          }
+          to {
+              opacity: 1;
+          }
       }
     </style>
 </head>
 <body>
-    <h1>Object Detection events for {student_email}</h1>
+    <h2>Object Detection - {student_email}</h2>
     <table class="object-detection-table">
-      <thead>
-        <tr>
-          <th>Time</th>
-          <th>Image</th>
-        </tr>
-      </thead>
-      <tbody>
-        {objectDetectionData.map((detectionEvent, index) => (
-          <tr key={index}>
-            <td>{detectionEvent.time}</td>
-            <td>
-              <img class="object-detection-image"
-                   src={detectionEvent.image}
-                   alt="Detected Object" />
-            </td>
-          </tr>
-        ))}
-      </tbody>
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Image</th>
+            </tr>
+        </thead>
+        <tbody>
+            {objectDetectionData.map((detectionEvent, index) => (
+                <tr key={index}>
+                    <td>{detectionEvent.time}</td>
+                    <td>
+                        <img class="object-detection-image"
+                             src={detectionEvent.image}
+                             alt="Detected Object" />
+                    </td>
+                </tr>
+            ))}
+        </tbody>
     </table>
 </body>
 </html>
