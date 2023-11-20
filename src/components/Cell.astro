@@ -16,17 +16,27 @@ const redirectUrl = `${examName}/${studentEmail}/${test}/`;
 </td>
 
 <style>
-  td {
-    padding: 8px;
-    text-align: center;
-  }
-  .success {
-    background-color: #28a745; /* Green for success */
-  }
-  .fail {
-    background-color: #dc3545; /* Red for fail */
-  }
-  td {
-    cursor: pointer; /* Change cursor to indicate the cell is clickable */
-  }
+
+td {
+  padding: 8px;
+  text-align: center;
+  transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  cursor: pointer; /* Change cursor to indicate the cell is clickable */
+  font-weight: bold; /* Make text bold */
+}
+
+.success:hover, .fail:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 10px white; /* Halo effect on hover */
+}
+
+.success {
+  background-color: #28a745; /* Green for success */
+}
+
+.fail {
+  background-color: #dc3545; /* Red for fail */
+}
+
+
 </style>

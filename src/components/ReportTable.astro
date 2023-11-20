@@ -37,33 +37,71 @@ const testKeys = reports.length > 0 ? Object.keys(reports[0]).filter(key => key 
 </div>
 
 <style>
-  .table-container {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    margin-top: 20px;
+
+.table-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 20px;
+  animation: slideIn 0.5s ease-out, fadeIn 0.5s ease-out;
+}
+
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  min-width: 50%;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  animation: slideIn 0.5s ease-out, fadeIn 0.5s ease-out;
+}
+
+th, td {
+  border-right: 1px solid #dee2e6;
+  border-bottom: 1px solid #dee2e6;
+  padding: 10px 15px;
+  width: 120px; /* Fixed width for all cells */
+  min-width: 120px; /* Minimum width for all cells */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  font-weight: bold; /* Make all text bold */
+}
+
+th:first-child, td:first-child {
+  border-left: 1px solid #dee2e6;
+}
+
+th {
+  background-color: #007BFF;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+td {
+  background-color: white;
+  color: #333;
+}
+
+td:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px white; /* Halo effect on hover */
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(50px);
   }
-  
-  table {
-    border-collapse: collapse;
-    text-align: center;
+  to {
+    transform: translateY(0);
   }
-  
-  th, td {
-    border: 1px solid #dee2e6;
-    padding: 5px 10px; /* Adjust the padding to change the cell dimensions */
-    width: 100px; /* Set a fixed width */
-    height: 10px; /* Set a fixed height */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
-  
-  th {
-    background-color: #f8f9fa;
+  to {
+    opacity: 1;
   }
-  
-  /* Ensure that the student email column is not constrained to the same width */
-  th:first-child, td:first-child {
-    width: auto;
-  }
-  
-  /* Add any other table styles you need here */
+}
+
+
 </style>
