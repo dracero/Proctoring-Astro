@@ -22,6 +22,7 @@ const examList = await getExams();
 ---
 
 <div class="centered-form-wrapper">
+  <h1>PROCTORING - CETEC</h1>
   <img src="/fiuba-2.jpg" alt="Logo" class="logo-image" />
   <form action="/reports/" method="get" class="exam-form">
     <DropDownMenu exams={examList} />
@@ -58,8 +59,19 @@ const examList = await getExams();
     display: flex;
     flex-direction: column; /* Stack children vertically */
     align-items: center;
-    justify-content: center;
-    height: 100vh; /* Use the full height of the viewport */
+    height: 80vh; /* Use the full height of the viewport */
+  }
+
+  h1 {
+    color: #007BFF;
+    font-size: 2.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    width: max-content;
+    border-bottom: 4px solid #007BFF;
+    animation: fadeIn 1s ease-out;
   }
 
   .logo-image {
