@@ -79,10 +79,23 @@ const outOfFrameData = await fetchOutOfFrameData(exam_name, student_email);
       }
 
       .out-of-frame-image {
-          max-width: 50px; /* Set a max-width for images */
-          height: auto; /* Maintain aspect ratio */
-          margin-right: 5px; /* Add some space between images */
-      }
+            max-width: 50px; /* Set a max-width for images */
+            height: auto; /* Maintain aspect ratio */
+            margin-right: 5px; /* Add some space between images */
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for transform and box-shadow */
+            cursor: pointer; /* Change cursor to indicate the image is clickable */
+        }
+
+        .out-of-frame-image:hover {
+            box-shadow: 0 0 10px white; /* White halo effect on hover */
+            transform: scale(1.5); /* Increase size of image when clicked */
+        }
+
+        .out-of-frame-image:active {
+            transform: scale(5); /* Increase size of image when clicked */
+            position: relative; /* Ensure the image is positioned relative to its normal position */
+            z-index: 10; /* Make sure the image is above other elements */
+        }
 
       @keyframes slideIn {
           from {
