@@ -5,7 +5,7 @@ const { exam_name, student_email } = Astro.params;
 // Define an async function to fetch the screenshot data for the given exam and student
 async function fetchScreenshotData(exam, student) {
   try {
-    const response = await fetch(`http://localhost:8000/reports/${exam}/${student}/screenshot`);
+    const response = await fetch(`https://proctoring-backend.onrender.com/reports/${exam}/${student}/screenshot`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }

@@ -5,7 +5,7 @@ import ReportTable from '../../components/ReportTable.astro';
 // Define an async function to fetch the report data for the given exam
 async function fetchReportData(exam) {
   try {
-    const response = await fetch(`http://localhost:8000/reports/${exam}`);
+    const response = await fetch(`https://proctoring-backend.onrender.com/reports/${exam}`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }

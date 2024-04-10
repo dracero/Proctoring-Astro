@@ -5,7 +5,7 @@ import GoButton from '../components/GoButton.astro';
 
 async function getExams() {
     try {
-        const response = await fetch('http://localhost:8000/exams');
+        const response = await fetch('https://proctoring-backend.onrender.com/exams');
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
